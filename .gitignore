@@ -16,3 +16,6 @@
 /tmp
 
 /lib/mint_script.py
+
+# Ignore application configuration
+/config/application.yml

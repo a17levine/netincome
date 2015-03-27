@@ -8,6 +8,7 @@ group :development do
 	gem 'sqlite3'
 	gem 'pry'
 	gem 'better_errors'
+  gem 'figaro'
 end
 
 # Use SCSS for stylesheets
