@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
       @accounts = []
       response.each do |account|
         if account["accountSystemStatus"] && account["accountSystemStatus"] == "ACTIVE"
-          a = self.accounts.find_or_create_by(:mint_id => account["accountId"])
+          a = self.accounts.find_or_create_by(:mint_id => account["accountId"].to_s)
           unless a.name
             a.name = account["fiLoginDisplayName"]
             a.save
