@@ -11,6 +11,11 @@ group :development do
   gem 'figaro'
 end
 
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
 gem 'rest-client'
 
 # Use SCSS for stylesheets

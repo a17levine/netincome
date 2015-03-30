@@ -66,6 +66,7 @@ GEM
     minitest (5.5.1)
     multi_json (1.11.0)
     netrc (0.10.3)
+    pg (0.18.1)
     polyglot (0.3.5)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -84,6 +85,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.1)
       sprockets-rails (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.3)
+    rails_stdout_logging (0.0.3)
     railties (4.1.1)
       actionpack (= 4.1.1)
       activesupport (= 4.1.1)
@@ -143,8 +149,10 @@ DEPENDENCIES
   figaro
   jbuilder (~> 2.0)
   jquery-rails
+  pg
   pry
   rails (= 4.1.1)
+  rails_12factor
   rest-client
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
