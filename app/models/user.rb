@@ -27,13 +27,15 @@ class User < ActiveRecord::Base
     @accounts_to_track = self.accounts.map { |a| a.id }
     @relevant_account_updates = BalanceUpdate.where("created_at >= :start_time AND created_at <= :end_time",
   {start_time: start_time, end_time: end_time}).where(:account_id => @accounts_to_track).order(:created_at)
-    @accounts_to_track.each do |account_id|
-      account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
-      account_relevant_updates.sort_by &:created_at
-      max_amount = account_relevant_updates[-1].amount
-      min_amount = account_relevant_updates[0].amount
-      difference = max_amount - min_amount
-      @difference += difference
+    if @relevant_account_updates.any?
+      @accounts_to_track.each do |account_id|
+        account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
+        account_relevant_updates.sort_by &:created_at
+        max_amount = account_relevant_updates[-1].amount
+        min_amount = account_relevant_updates[0].amount
+        difference = max_amount - min_amount
+        @difference += difference
+      end
     end
     return @difference
   end
@@ -43,12 +45,20 @@ class User < ActiveRecord::Base
     get_difference(start_time, end_time) / @days_elapsed
   end
 
-  # def thirty_day_average_net_income_chart
-  #   return {
-  #     :data => [45, 46]
-  #     :labels => ['Date1', 'Date2']
-  #   }
-  # end
+  def thirty_day_average_net_income_chart
+    @labels = []
+    @data = []
+    30.times do |i|
+      start_time = Time.now - (30 + i).days
+      end_time = Time.now - i.days
+      @labels << end_time.strftime("%b%e")
+      @data << get_difference_per_day(start_time, end_time)
+    end
+    return {
+      :data => @data.reverse!,
+      :labels => @labels.reverse!
+    }
+  end
   
   def name
     "#{self.first_name} #{self.last_name}"
