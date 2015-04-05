@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
           a = self.accounts.find_or_create_by(:mint_id => account["accountId"].to_s)
           unless a.name
             a.name = account["fiLoginDisplayName"]
+            puts "Updating #{self.name}"
             a.save
           end
           a.balance_updates.create(:amount => account["value"])
@@ -19,5 +20,9 @@ class User < ActiveRecord::Base
       puts "Mint couldn't be reached. Error below."
       puts e
     end
+  end
+
+  def name
+    "#{self.first_name} #{self.last_name}"
   end
 end

@@ -9,6 +9,7 @@ group :development do
 	gem 'pry'
 	gem 'better_errors'
   gem 'figaro'
+  gem 'quiet_assets'
 end
 
 group :production do
@@ -17,6 +18,7 @@ group :production do
 end
 
 gem 'rest-client'
+gem 'chart-js-rails'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
