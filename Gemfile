@@ -19,6 +19,7 @@ end
 
 gem 'rest-client'
 gem 'chart-js-rails'
+gem 'foundation-rails'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
