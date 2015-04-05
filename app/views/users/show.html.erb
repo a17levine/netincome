@@ -1,6 +1,13 @@
 <div class="row">
 
 <h1><%= @user.name %></h1>
+<div class="row">
+	<h2>Net income: $<%= @thirty_day_income_chart[:data].last %> / day</h2>
+	<p>$<%= @thirty_day_income_chart[:data].last * 7 %> / week</p>
+	<p>$<%= @thirty_day_income_chart[:data].last * 30.43 %> / month</p>
+	<p>$<%= @thirty_day_income_chart[:data].last * 365.25 %> / year</p>
+	<small>From a 30 day trailing average</small>
+</div>
 
 <canvas id="canvas" height='450' width='800'></canvas>
 
