@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
       start_time = Time.now - (30 + i).days
       end_time = Time.now - i.days
       @labels << end_time.strftime("%b%e")
-      @data << get_difference_per_day(start_time, end_time)
+      @data << get_difference_per_day(start_time, end_time).round(0)
     end
     return {
       :data => @data.reverse!,
