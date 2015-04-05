@@ -2,10 +2,10 @@
 
 <h1><%= @user.name %></h1>
 <div class="row">
-	<h2>Net income: $<%= @thirty_day_income_chart[:data].last %> / day</h2>
-	<p>$<%= @thirty_day_income_chart[:data].last * 7 %> / week</p>
-	<p>$<%= @thirty_day_income_chart[:data].last * 30.43 %> / month</p>
-	<p>$<%= @thirty_day_income_chart[:data].last * 365.25 %> / year</p>
+	<h2>Net income: <%= number_to_currency(@thirty_day_income_chart[:data].last, precision: 0) %> / day</h2>
+	<p><%= number_to_currency(@thirty_day_income_chart[:data].last * 7, precision: 0) %> / week</p>
+	<p><%= number_to_currency(@thirty_day_income_chart[:data].last * 30.43, precision: 0) %> / month</p>
+	<p><%= number_to_currency(@thirty_day_income_chart[:data].last * 365.25, precision: 0) %> / year</p>
 	<small>From a 30 day trailing average</small>
 </div>
 
