@@ -23,12 +23,15 @@
 			      }
 			    ]
 			  };
-			  return myNewChart = new Chart($("#canvas").get(0).getContext("2d")).Line(data, {
+			  return myNewChart = new Chart($("#canvas").get(0).getContext("2d")).Line(data,
+			   	{
 			  	tooltipTemplate: function(d){
 			  		var tooltip = "$ " + d.value;
 			  		return tooltip;
+			  		},
+			  	pointHitDetectionRadius : 3
 			  	}
-			  })
+		  	)
 			});
 		})  
 	</script>
