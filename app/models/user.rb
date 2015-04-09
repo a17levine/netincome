@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
           a = self.accounts.find_or_create_by(:mint_id => account["accountId"].to_s)
           unless a.name
             a.name = account["fiLoginDisplayName"]
-            puts "Updating #{self.name}"
+            puts "Updating #{self.name} account #{account['fiLoginDisplayName']}"
             a.save
           end
           a.balance_updates.create(:amount => account["value"])
