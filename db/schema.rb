@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330221431) do
+ActiveRecord::Schema.define(version: 20150409033649) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150330221431) do
     t.datetime "updated_at"
     t.string   "mint_u"
     t.string   "mint_p"
+    t.string   "uuid"
   end
 
 end

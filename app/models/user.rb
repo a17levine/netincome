@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :accounts
-
+  before_create :create_uuid
+  
   def mint_update
     begin
       response = JSON.parse(RestClient.get ENV['MINT_API_SERVER_URL'] + '/get_mint', {:params => {:u => self.mint_u, :p => self.mint_p}})
@@ -62,5 +63,14 @@ class User < ActiveRecord::Base
   
   def name
     "#{self.first_name} #{self.last_name}"
+  end
+
+
+  private
+
+  def create_uuid
+    begin
+      self.uuid = SecureRandom.uuid
+    end while self.class.exists?(:uuid => uuid)
   end
 end
