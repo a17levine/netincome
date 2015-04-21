@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
   end
 
   def get_difference_per_day(start_time, end_time)
+      puts "start time is #{start_time}"
+      puts "end time is #{end_time}"
     @days_elapsed = (end_time.to_i - start_time.to_i) / 1.day
     get_difference(start_time, end_time) / @days_elapsed
   end
@@ -50,8 +52,6 @@ class User < ActiveRecord::Base
     @labels = []
     @data = []
     30.times do |i|
-      puts "start time is #{start_time}"
-      puts "end time is #{end_time}"
       start_time = Time.now - (30 + i).days
       end_time = Time.now - i.days
       puts "@labels is #{@labels.inspect}"
