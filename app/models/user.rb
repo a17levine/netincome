@@ -56,9 +56,7 @@ class User < ActiveRecord::Base
     30.times do |i|
       start_time = Time.now - (30 + i).days
       end_time = Time.now - i.days
-      puts "@labels is #{@labels.inspect}"
       @labels << end_time.strftime("%b%e")
-      puts "@data is #{@data.inspect}"
       @data << get_difference_per_day(start_time, end_time).round(0)
     end
     return {
