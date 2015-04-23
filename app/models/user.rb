@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
       @accounts_to_track.each do |account_id|
         account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
         account_relevant_updates.sort_by &:created_at
+        puts "account_relevant_updates for account #{account_id}"
+        puts account_relevant_updates
         max_amount = account_relevant_updates[-1].amount
         min_amount = account_relevant_updates[0].amount
         difference = max_amount - min_amount
