@@ -44,8 +44,6 @@ class User < ActiveRecord::Base
   end
 
   def get_difference_per_day(start_time, end_time)
-      puts "start time is #{start_time}"
-      puts "end time is #{end_time}"
     @days_elapsed = (end_time.to_i - start_time.to_i) / 1.day
     get_difference(start_time, end_time) / @days_elapsed
   end
