@@ -17,6 +17,15 @@
 
 </div>
 
+<div class="row">
+  <h3>Tracking accounts</h3>
+  <ul>
+    <% @user.accounts.each do |account| %>
+      <li><%= "#{account.name} last updated #{time_ago_in_words account.balance_updates.last.created_at}" %></li>
+    <% end %>
+  </ul>
+</div>
+
 <% content_for :page_specific_js do %>
 	<script>
 		$(document).ready(function(){
