@@ -18,12 +18,14 @@
 </div>
 
 <div class="row">
-  <h3>Tracking accounts</h3>
-  <ul>
-    <% @user.accounts.each do |account| %>
-      <li><b><%= account.name %></b> - <%= number_to_currency(account.balance_updates.last.amount, precision: 0) %> <%=  "(last updated #{time_ago_in_words account.balance_updates.last.created_at} ago)" %></li>
-    <% end %>
-  </ul>
+  <div class="columns">
+    <h3>Tracking accounts</h3>
+    <ul>
+      <% @user.accounts.each do |account| %>
+        <li><b><%= account.name %></b> - <%= number_to_currency(account.balance_updates.last.amount, precision: 0) %> <%=  "(last updated #{time_ago_in_words account.balance_updates.last.created_at} ago)" %></li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
 <% content_for :page_specific_js do %>
