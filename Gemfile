@@ -19,7 +19,7 @@ end
 
 gem 'rest-client'
 gem 'chart-js-rails'
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 5.1.1.0'
 gem 'linefit'
 
 # Use SCSS for stylesheets
