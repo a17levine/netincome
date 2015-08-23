@@ -60,13 +60,15 @@ class User < ActiveRecord::Base
       x_coordinates = []
       account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
       account_relevant_updates.sort_by &:created_at
-      account_relevant_updates.each do |account_relevant_update|
-        x_coordinates << (account_relevant_update.created_at - x_coordinate_start_date) / 1.day
-        y_coordinates << account_relevant_update.amount
+      if account_relevant_updates.any?
+        account_relevant_updates.each do |account_relevant_update|
+          x_coordinates << (account_relevant_update.created_at - x_coordinate_start_date) / 1.day
+          y_coordinates << account_relevant_update.amount
+        end
+        lineFit.setData(x_coordinates,y_coordinates)
+        intercept, slope = lineFit.coefficients
+        slopes << slope
       end
-      lineFit.setData(x_coordinates,y_coordinates)
-      intercept, slope = lineFit.coefficients
-      slopes << slope
     end
     slopes.sum
   end
