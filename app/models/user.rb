@@ -53,15 +53,17 @@ class User < ActiveRecord::Base
     @accounts_to_track = self.accounts.map { |a| a.id }
     @relevant_account_updates = BalanceUpdate.where("created_at >= :start_time AND created_at <= :end_time",
   {start_time: start_time, end_time: end_time}).where(:account_id => @accounts_to_track).order(:created_at)
-    x_coordinates = []
     x_coordinate_start_date = start_time
-    y_coordinates = []
     slopes = []
     @accounts_to_track.each do |account_id|
+      y_coordinates = []
+      x_coordinates = []
       account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
       account_relevant_updates.sort_by &:created_at
-      x_coordinates << (account_update.created_at - x_coordinate_start_date) / 1.day
-      y_coordinates << account_update.amount
+      account_relevant_updates.each do |account_relevant_update|
+        x_coordinates << (account_relevant_update.created_at - x_coordinate_start_date) / 1.day
+        y_coordinates << account_relevant_update.amount
+      end
       lineFit.setData(x_coordinates,y_coordinates)
       intercept, slope = lineFit.coefficients
       slopes << slope
