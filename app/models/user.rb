@@ -48,6 +48,27 @@ class User < ActiveRecord::Base
     get_difference(start_time, end_time) / @days_elapsed
   end
 
+  def get_linear_regression_slope(start_time, end_time)
+    lineFit = LineFit.new
+    @accounts_to_track = self.accounts.map { |a| a.id }
+    @relevant_account_updates = BalanceUpdate.where("created_at >= :start_time AND created_at <= :end_time",
+  {start_time: start_time, end_time: end_time}).where(:account_id => @accounts_to_track).order(:created_at)
+    x_coordinates = []
+    x_coordinate_start_date = start_time
+    y_coordinates = []
+    slopes = []
+    @accounts_to_track.each do |account_id|
+      account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
+      account_relevant_updates.sort_by &:created_at
+      x_coordinates << (account_update.created_at - x_coordinate_start_date) / 1.day
+      y_coordinates << account_update.amount
+      lineFit.setData(x_coordinates,y_coordinates)
+      intercept, slope = lineFit.coefficients
+      slopes << slope
+    end
+    slopes.sum
+  end
+
   def thirty_day_average_net_income_chart
     @labels = []
     @data = []
@@ -55,7 +76,7 @@ class User < ActiveRecord::Base
       start_time = Time.now - (30 + i).days
       end_time = Time.now - i.days
       @labels << end_time.strftime("%b%e")
-      @data << get_difference_per_day(start_time, end_time).round(0)
+      @data << get_linear_regression_slope(start_time, end_time).round(0)
     end
     return {
       :data => @data.reverse!,
