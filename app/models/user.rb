@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
       x_coordinates = []
       account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
       account_relevant_updates.sort_by &:created_at
-      if account_relevant_updates.any?
+      if account_relevant_updates.any? && account_relevant_updates.count > 1
         account_relevant_updates.each do |account_relevant_update|
           x_coordinates << (account_relevant_update.created_at - x_coordinate_start_date) / 1.day
           y_coordinates << account_relevant_update.amount
