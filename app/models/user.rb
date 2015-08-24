@@ -67,6 +67,9 @@ class User < ActiveRecord::Base
         end
         lineFit.setData(x_coordinates,y_coordinates)
         intercept, slope = lineFit.coefficients
+        puts "slope for #{Account.find(account_id).name} account is #{slope}"
+        puts "x_coordinates are #{x_coordinates.inspect}"
+        puts "y_coordinates are #{y_coordinates.inspect}"
         slopes << slope
       end
     end
