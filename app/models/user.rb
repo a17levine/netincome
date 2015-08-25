@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
   def get_linear_regression_slope(start_time, end_time)
     lineFit = LineFit.new
-    @accounts_to_track = self.accounts.map { |a| a.id }
+    @accounts_to_track = self.accounts.where(tracking: true).map { |a| a.id }
     @relevant_account_updates = BalanceUpdate.where("created_at >= :start_time AND created_at <= :end_time",
   {start_time: start_time, end_time: end_time}).where(:account_id => @accounts_to_track).order(:created_at)
     x_coordinate_start_date = start_time
