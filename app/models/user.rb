@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
     @data = []
     days = 90
     days.times do |i|
-      date = Date.today - (days + i).days
+      date = Date.today - (i).days
       @labels << date.strftime("%b%e")
       @data << self.balance_on_date(date)
     end
