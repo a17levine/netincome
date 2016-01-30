@@ -90,6 +90,20 @@ class User < ActiveRecord::Base
       :labels => @labels.reverse!
     }
   end
+
+  def balance_chart
+    @labels = []
+    @data = []
+    30.times do |i|
+      date = Date.today - (30 + i).days
+      @labels << date.strftime("%b%e")
+      @data << self.balance_on_date(date)
+    end
+    return {
+      :data => @data.reverse!,
+      :labels => @labels.reverse!
+    }
+  end
   
   def name
     "#{self.first_name} #{self.last_name}"
