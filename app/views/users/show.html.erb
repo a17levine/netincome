@@ -3,6 +3,7 @@
     <h1><%= @user.name %></h1>
   </div>
 
+<% if false %>
   <div class="columns">
   	<h2>Net income: <%= number_to_currency(@thirty_day_income_chart[:data].last, precision: 0) %> / day</h2>
   	<p><%= number_to_currency(@thirty_day_income_chart[:data].last * 7, precision: 0) %> / week</p>
@@ -10,6 +11,7 @@
   	<p><%= number_to_currency(@thirty_day_income_chart[:data].last * 365.25, precision: 0) %> / year</p>
   	<small>From a 30 day trailing average</small>
   </div>
+<% end %>
 
   <div class="columns">
     <canvas id="canvas" style='width:100%'></canvas>
