@@ -94,8 +94,9 @@ class User < ActiveRecord::Base
   def balance_chart
     @labels = []
     @data = []
-    30.times do |i|
-      date = Date.today - (30 + i).days
+    days = 90
+    days.times do |i|
+      date = Date.today - (days + i).days
       @labels << date.strftime("%b%e")
       @data << self.balance_on_date(date)
     end
