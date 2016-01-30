@@ -48,32 +48,33 @@ class User < ActiveRecord::Base
     get_difference(start_time, end_time) / @days_elapsed
   end
 
-  def get_linear_regression_slope(start_time, end_time)
-    lineFit = LineFit.new
-    @accounts_to_track = self.accounts.where(tracking: true).map { |a| a.id }
-    @relevant_account_updates = BalanceUpdate.where("created_at >= :start_time AND created_at <= :end_time",
-  {start_time: start_time, end_time: end_time}).where(:account_id => @accounts_to_track).order(:created_at)
-    x_coordinate_start_date = start_time
-    slopes = []
-    @accounts_to_track.each do |account_id|
-      y_coordinates = []
-      x_coordinates = []
-      account_relevant_updates = @relevant_account_updates.select { |au| au.account_id == account_id }
-      account_relevant_updates.sort_by &:created_at
-      if account_relevant_updates.any? && account_relevant_updates.count > 1
-        account_relevant_updates.each do |account_relevant_update|
-          x_coordinates << (account_relevant_update.created_at - x_coordinate_start_date) / 1.day
-          y_coordinates << account_relevant_update.amount
-        end
-        lineFit.setData(x_coordinates,y_coordinates)
-        intercept, slope = lineFit.coefficients
-        puts "slope for #{Account.find(account_id).name} account is #{slope}"
-        puts "x_coordinates are #{x_coordinates.inspect}"
-        puts "y_coordinates are #{y_coordinates.inspect}"
-        slopes << slope
-      end
+  def get_linear_regression
+    labels = []
+    data = []
+    days = 90
+    days.times do |i|
+      date = Date.today - (i).days
+      labels << i
+      data << self.balance_on_date(date)
     end
-    slopes.sum
+    lineFit = LineFit.new
+    lineFit.setData(labels,data)
+    intercept, slope = lineFit.coefficients
+    return {
+      slope: slope,
+      intercept: intercept
+    }
+  end
+
+  def linear_regression_chart
+    data = []
+    regression_results = get_linear_regression
+    90.times do |i|
+      data << regression_results[:intercept] + (i * regression_results[:slope])
+    end
+    return {
+      :data => data.reverse!,
+    }
   end
 
   def thirty_day_average_net_income_chart
