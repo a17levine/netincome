@@ -7,11 +7,11 @@ class Account < ActiveRecord::Base
     beginning_of_date = date_object.in_time_zone("Central Time (US & Canada)").beginning_of_day
     balance_updates_query_result = self.balance_updates.where('created_at > ? AND created_at < ?', beginning_of_date, end_of_date)
     if balance_updates_query_result.any?
-      balance_updates_query_result.last.amount
       puts 'found balance updates on account' + self.name
+      return balance_updates_query_result.last.amount
     else
       puts 'did not find balance updates on account' + self.name
-      nil
+      return nil
     end
   end
 end
