@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
       labels << i
       data << self.balance_on_date(date)
     end
+    labels.reverse!
     lineFit = LineFit.new
     lineFit.setData(labels,data)
     intercept, slope = lineFit.coefficients
@@ -73,22 +74,9 @@ class User < ActiveRecord::Base
       data << regression_results[:intercept] + (i * regression_results[:slope])
     end
     return {
-      :data => data.reverse!,
-    }
-  end
-
-  def thirty_day_average_net_income_chart
-    @labels = []
-    @data = []
-    30.times do |i|
-      start_time = Time.now - (30 + i).days
-      end_time = Time.now - i.days
-      @labels << end_time.strftime("%b%e")
-      @data << get_linear_regression_slope(start_time, end_time).round(0)
-    end
-    return {
-      :data => @data.reverse!,
-      :labels => @labels.reverse!
+      :data => data,
+      :slope => regression_results[:slope],
+      :intercept => regression_results[:intercept]
     }
   end
 
@@ -101,9 +89,11 @@ class User < ActiveRecord::Base
       @labels << date.strftime("%b%e")
       @data << self.balance_on_date(date)
     end
+    @labels.reverse!
+    @data.reverse!
     return {
-      :data => @data.reverse!,
-      :labels => @labels.reverse!
+      :data => @data,
+      :labels => @labels
     }
   end
   
