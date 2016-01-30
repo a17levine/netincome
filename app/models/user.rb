@@ -95,6 +95,22 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  def balance_on_date(date)
+    accounts_that_are_being_tracked = self.accounts.where(tracking: true)
+    amount_of_accounts_tracking = accounts_that_are_being_tracked.count
+
+    balance_updates = []
+    accounts_that_are_being_tracked.each do |account|
+      balance_updates << account.balance_on_date(date)
+    end
+    balance_updates.compact!
+    if balance_updates.count != amount_of_accounts_tracking
+      return nil
+    else
+      return balance_updates.inject(:+)
+    end
+  end
+
 
   private
 
