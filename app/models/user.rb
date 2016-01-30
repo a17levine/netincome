@@ -111,6 +111,7 @@ class User < ActiveRecord::Base
 
   def balance_on_date(date)
     accounts_that_are_being_tracked = self.accounts.where(tracking: true)
+    puts "amount of accounts being tracked is #{accounts_that_are_being_tracked.count}"
     amount_of_accounts_tracking = accounts_that_are_being_tracked.count
 
     balance_updates = []
@@ -118,6 +119,7 @@ class User < ActiveRecord::Base
       balance_updates << account.balance_on_date(date)
     end
     balance_updates.compact!
+    puts "balance_updates array is #{balance_updates.inspect} with a count of #{balance_updates.count}"
     if balance_updates.count != amount_of_accounts_tracking
       return nil
     else
