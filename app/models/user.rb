@@ -116,15 +116,14 @@ class User < ActiveRecord::Base
 
     balance_updates = []
     accounts_that_are_being_tracked.each do |account|
-      balance_updates << account.balance_on_date(date)
+      if account.balance_on_date(date)
+        balance_updates << account.balance_on_date(date)
+      else
+        balance_updates << account.last_balance_update_before_date(date)
+      end
     end
     balance_updates.compact!
-    puts "balance_updates array is #{balance_updates.inspect} with a count of #{balance_updates.count}"
-    if balance_updates.count != amount_of_accounts_tracking
-      return nil
-    else
-      return balance_updates.inject(:+)
-    end
+    return balance_updates.inject(:+)
   end
 
 

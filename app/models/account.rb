@@ -14,4 +14,14 @@ class Account < ActiveRecord::Base
       return nil
     end
   end
+
+  def last_balance_update_before_date(date_object)
+    end_of_date = date_object.in_time_zone("Central Time (US & Canada)").end_of_day
+    balance_updates_query_result = self.balance_updates.where('created_at < ?', end_of_date)
+    if balance_updates_query_result.any?
+      return balance_updates_query_result.last.amount
+    else
+      return 0
+    end
+  end
 end
