@@ -8,9 +8,9 @@ class Account < ActiveRecord::Base
     balance_updates_query_result = self.balance_updates.where('created_at > ? AND created_at < ?', beginning_of_date, end_of_date)
     if balance_updates_query_result.any?
       balance_updates_query_result.last.amount
-      puts 'found balance updates on account' + account.name
+      puts 'found balance updates on account' + self.name
     else
-      puts 'did not find balance updates on account' + account.name
+      puts 'did not find balance updates on account' + self.name
       nil
     end
   end
