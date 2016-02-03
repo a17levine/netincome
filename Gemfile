@@ -22,6 +22,7 @@ gem 'rest-client'
 gem 'chart-js-rails'
 gem 'foundation-rails', '~> 5.1.1.0'
 gem 'linefit'
+gem 'devise'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
