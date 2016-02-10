@@ -122,6 +122,10 @@ class User < ActiveRecord::Base
     return balance_updates.inject(:+)
   end
 
+  def configured?
+    accounts.any? ? true : false
+  end
+
 
   private
 

@@ -1,0 +1,12 @@
+<h1>accounts</h1>
+
+<% if @accounts.any? %>
+  <ul>
+    <% @accounts.each do |account| %>
+      <li><%= account.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>no accounts to show</p>
+  <p><%= link_to 'add one', new_account_path %></p>
+<% end %>
